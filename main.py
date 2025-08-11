@@ -25,13 +25,14 @@ def play_one_episode(agent, env):
     done = False
     while not done:
         a = agent.get_action(s)
-        next_state, r, done, info = env.step(a)
+        next_state, r, done, portfolio_val = env.step(a)
         next_state = standard_scale(next_state)
-        
+
         if train_mode:
             agent.train(s, a, r, next_state, done)
 
         s = next_state
+    return portfolio_val
 
 train_mode = True
 for _ in range(NUM_EPISODE):
